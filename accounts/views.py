@@ -47,8 +47,5 @@ def log_in(request):
 
     return render(request, 'accounts/login.html')
 
-def log_out(request):
-    return render(request, 'accounts/logout')
-
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
