@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load humanize %}
+
+{% block title %} - All Posts {% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if posts %}
+        {% for post in posts %}
+            <h1>posts by {{ post.posted_by }}</h1>
+            <hr />
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">votes</th>
+                        <th scope="col">title</th>
+                        <th scope="col">description</th>
+                        <th scope="col">pub date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ post.votes }}</th>
+                        <td>
+                            <a class="text-dark" href="{{ post.url }}">{{ post.title }}</a>
+                        </td>
+                        <td class="font-italic">{{ post.short_description }}</td>
+                        <td>{{ post.pub_date | timesince }}</td>
+                    </tr>
+                </tbody>
+            </table>
+         {% endfor %}
+    {% else %}
+    <h3>no posts available :(</h3>
+    {% endif %}
+</div>
+
+{% endblock %}
