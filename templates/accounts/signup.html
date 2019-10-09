@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+- Sign up
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>sign up</h1>
+    <hr />
+    <form action="{% url 'signup' %}" method="POST">
+        {% csrf_token %}
+        {% if messages %}
+            {% include 'partials/_alerts.html' %}
+        {% endif %}
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name">
+        </div>
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name">
+        </div>
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="username" id="username" placeholder="username">
+        </div>
+        <div class="form-group col-md-6">
+            <input type="email" class="form-control" name="email" id="email" placeholder="email">
+        </div>
+        <div class="form-group col-md-6">
+            <input type="password" class="form-control" name="password" id="password" placeholder="password">
+        </div>
+        <div class="form-group col-md-6">
+            <input type="password" class="form-control" name="password2" id="password2" placeholder="confirm password">
+        </div>
+        <button type="submit" class="btn btn-secondary">sign up</button>
+    </form>
+</div>
+{% endblock %}
