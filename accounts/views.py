@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
+from posts.models import Post
+
 def sign_up(request):
+    """ Registers user and redirects to login page """
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -21,7 +24,7 @@ def sign_up(request):
                 password=password
             )
             user.save()
-            return redirect('index')
+            return redirect('login')
         else:
             messages.error(request, 'Passwords do not match')
             return render(request, 'accounts/signup.html')
@@ -29,6 +32,7 @@ def sign_up(request):
     return render(request, 'accounts/signup.html')
 
 def log_in(request):
+    """ Logs in user and redirects to dashboard """
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -48,4 +52,12 @@ def log_in(request):
     return render(request, 'accounts/login.html')
 
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    """ Shows all posts by user """
+    id = request.user.id
+    posts = Post.objects.filter(posted_by__id=id)
+
+    context = {
+        'posts': posts
+    }
+
+    return render(request, 'accounts/dashboard.html', context)

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load bootstrap %}
+
+{% block title %} - New Post {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>new post</h1>
+    {% if request.method == 'POST' %}
+        {% include 'partials/_alerts.html'%}
+    {% endif %}
+    <form action="{% url 'newpost' %}" method="POST">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <button type="submit" class="btn btn-secondary">post</button>
+    </form>
+</div>
+
+{% endblock %}
