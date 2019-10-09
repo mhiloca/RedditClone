@@ -37,6 +37,10 @@ def log_in(request):
         if user is not None:
             login(request, user)
             return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid login')
+            return render(request, 'accounts/login.html')
+
     return render(request, 'accounts/login.html')
 
 def log_out(request):
