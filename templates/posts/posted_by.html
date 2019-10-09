@@ -7,9 +7,8 @@
 {% block content %}
 <div class="container">
     {% if posts %}
-        {% for post in posts %}
-            <h1>posts by {{ post.posted_by }}</h1>
-            <hr />
+        <h1>posts by {{ post.posted_by }}</h1>
+        <hr />
             <table class="table">
                 <thead class="thead-light">
                     <tr>
@@ -20,6 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                {% for post in posts %}
                     <tr>
                         <th scope="row">{{ post.votes }}</th>
                         <td>
@@ -28,9 +28,9 @@
                         <td class="font-italic">{{ post.short_description }}</td>
                         <td>{{ post.pub_date | timesince }}</td>
                     </tr>
+                {% endfor %}
                 </tbody>
             </table>
-         {% endfor %}
     {% else %}
     <h3>no posts available :(</h3>
     {% endif %}

@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from posts.models import Post
 
+
 def sign_up(request):
     """ Registers user and redirects to login page """
     if request.method == 'POST':
@@ -51,6 +52,7 @@ def log_in(request):
 
     return render(request, 'accounts/login.html')
 
+
 def dashboard(request):
     """ Shows all posts by user """
     id = request.user.id
@@ -61,3 +63,30 @@ def dashboard(request):
     }
 
     return render(request, 'accounts/dashboard.html', context)
+
+
+def delete_post(request, id):
+    """ Deletes post """
+    post = Post.objects.get(pk=id)
+
+    context = {
+        'post': post
+    }
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('dashboard')
+
+    return render(request, 'accounts/delete_post.html', context)
+
+def publish_post(request, id):
+    """ Publishes and unpublishes post """
+    post = Post.objects.get(pk=id)
+    if request.method == 'POST':
+        if post.is_published == True:
+            post.is_published = False
+        else:
+            post.is_published = True
+
+        post.save()
+    return dashboard(request)

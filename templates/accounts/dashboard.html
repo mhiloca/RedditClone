@@ -8,6 +8,54 @@
 <div class="container">
     <h1>{{ user.username }}'s dashboard</h1>
     <hr />
+    {% if posts %}
+        <hr />
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">votes</th>
+                    <th scope="col">title</th>
+                    <th scope="col">description</th>
+                    <th scope="col">pub date</th>
+                    <th scope="col">published</th>
+                    <th scope="col">delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr>
+                    <th scope="row">{{ post.votes }}</th>
+                    <td>
+                        <a class="text-dark" href="{{ post.url }}">{{ post.title }}</a>
+                    </td>
+                    <td class="font-italic">{{ post.short_description }}</td>
+                    <td>{{ post.pub_date | timesince }}</td>
+                    <td>
+                        {% if post.is_published %}
+                            <form action="{% url 'pubpost' post.id %}" method="POST">
+                                {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning">unpublish</button>
+                            </form>
+                        {% else %}
+                        <form action="{% url 'pubpost' post.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary">publish</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form action="{% url 'delete' post.id %}" method="GET">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+    <h3>no posts available :(</h3>
+    {% endif %}
 
 </div>
 {% endblock %}

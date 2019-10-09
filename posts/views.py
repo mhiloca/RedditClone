@@ -8,7 +8,7 @@ from .forms import PostForm
 
 def post_list(request):
     """ Lists all posts in the site """
-    posts = Post.objects.order_by('-pub_date')
+    posts = Post.objects.order_by('-pub_date').filter(is_published=True)
 
     context = {
         'posts': posts
