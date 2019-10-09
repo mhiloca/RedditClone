@@ -11,9 +11,9 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-        {% if user.is_authenticate %}
+        {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link disabled" href="{% url 'dashboard' %}" tabindex="-1" aria-disabled="true">{{ user.username }}</a>
+            <a class="nav-link text-muted" href="{% url 'dashboard' %}" >{{ user.username }}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">log out</a>
