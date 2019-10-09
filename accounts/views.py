@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 def sign_up(request):
@@ -28,8 +29,18 @@ def sign_up(request):
     return render(request, 'accounts/signup.html')
 
 def log_in(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
 
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')
     return render(request, 'accounts/login.html')
 
 def log_out(request):
     return render(request, 'accounts/logout')
+
+def dashboard(request):
+    pass
