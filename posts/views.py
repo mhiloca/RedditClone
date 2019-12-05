@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import Post
 from .forms import PostForm
@@ -18,9 +19,11 @@ def post_list(request):
 def posted_by(request, id):
     """ Lists all posts done by the specified user """
     posts = Post.objects.filter(posted_by__id=id)
+    author = User.objects.get(pk=id)
 
     context = {
-        'posts': posts
+        'posts': posts,
+        'author': author,
     }
     return render(request, 'posts/posted_by.html', context)
 
@@ -45,3 +48,21 @@ def new_post(request):
         messages.error(request, 'Invalid post')
 
     return render(request, 'posts/new_post.html', context)
+
+def vote_up(request, id):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=id)
+        post.votes += 1
+        post.save()
+        return redirect('list')
+
+    return redirect('list')
+
+def vote_down(request, id):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=id)
+        post.votes -= 1
+        post.save()
+        return redirect('list')
+
+    return redirect('list')

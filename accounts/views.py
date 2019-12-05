@@ -80,7 +80,7 @@ def delete_post(request, id):
     return render(request, 'accounts/delete_post.html', context)
 
 def publish_post(request, id):
-    """ Publishes and unpublishes post """
+    """ Publishes and un-publishes post """
     post = Post.objects.get(pk=id)
     if request.method == 'POST':
         if post.is_published == True:

@@ -6,18 +6,14 @@
 
 {% block content %}
 <div class="container">
+    <br>
     {% if posts %}
-        <h1>posts by {{ post.posted_by }}</h1>
+        <h1>posts by {{ author }}</h1>
         <hr />
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">votes</th>
-                        <th scope="col">title</th>
-                        <th scope="col">description</th>
-                        <th scope="col">pub date</th>
-                    </tr>
-                </thead>
+        <br>
+        <br>
+        <br>
+            <table class="table table-borderless">
                 <tbody>
                 {% for post in posts %}
                     <tr>
@@ -26,7 +22,11 @@
                             <a class="text-dark" href="{{ post.url }}">{{ post.title }}</a>
                         </td>
                         <td class="font-italic">{{ post.short_description }}</td>
-                        <td>{{ post.pub_date | timesince }}</td>
+                        <td>
+                            <small>
+                                Posted {{ post.pub_date | timesince }} ago
+                            </small>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
