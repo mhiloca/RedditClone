@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} - All Posts {% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    {% if posts %}
+        <h1>posts by {{ author }}</h1>
+        <hr />
+        <br>
+        <br>
+        <br>
+            <table class="table table-borderless">
+                <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <th scope="row">{{ post.votes }}</th>
+                        <td>
+                            <a class="text-dark" href="{{ post.url }}">{{ post.title }}</a>
+                        </td>
+                        <td class="font-italic">{{ post.short_description }}</td>
+                        <td>
+                            <small>
+                                Posted {{ post.pub_date | timesince }} ago
+                            </small>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    {% else %}
+    <h3>no posts available :(</h3>
+    {% endif %}
+</div>
+
+{% endblock %}

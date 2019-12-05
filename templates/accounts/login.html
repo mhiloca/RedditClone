@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+- Log in
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h1>log in</h1>
+    <hr />
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        {% if messages %}
+            {% include 'partials/_alerts.html' %}
+        {% endif %}
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="username" id="username" placeholder="username">
+        </div>
+
+        <div class="form-group col-md-6">
+            <input type="password" class="form-control" name="password" id="password" placeholder="password">
+        </div>
+        <button type="submit" class="btn btn-secondary">log in</button>
+    </form>
+</div>
+{% endblock %}

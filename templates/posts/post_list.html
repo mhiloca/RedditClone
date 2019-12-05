@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} - All Posts {% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h1>posts and more posts...</h1>
+    <hr />
+    <br>
+    {% if posts %}
+        <table class="table table-borderless">
+            {% for post in posts %}
+            <tbody>
+                <tr>
+                    <th scope="row" class="text-center">
+                        <form action="{% url 'vote_up' post.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn">
+                                <i class="fas fa-angle-up"></i>
+                            </button>
+                        </form>
+                            {{ post.votes }}
+                        <form action="{% url 'vote_down' post.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn">
+                                <i class="fas fa-angle-down"></i>
+                            </button>
+                        </form>
+                    </th>
+                    <td>
+                        <br>
+                        <a class="text-dark" href="{{ post.url }}">
+                            <strong>{{ post.title }}</strong>
+                        </a>
+                        <p>
+                            {{ post.short_description }}
+                            <br>
+                            <a class="text-dark font-italic" href="{% url 'postedby' post.posted_by.id %}">
+                                <small>Posted by {{ post.posted_by }}</small>
+                            </a>
+                            <small>
+                                - Posted {{ post.pub_date | timesince }} ago
+                            </small>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    {% else %}
+    <h3>no posts available :(</h3>
+    {% endif %}
+</div>
+
+{% endblock %}
